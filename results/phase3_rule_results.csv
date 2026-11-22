@@ -1,0 +1,8 @@
+router,pass_rate,total_cost_usd,avg_latency_s,quality_vs_premium_%,cost_vs_premium_%
+always_free,0.897,0.0,1.33,96.7,0.0
+always_cheap,0.9152,0.1947,8.64,98.7,42.8
+always_premium,0.9273,0.4546,3.29,100.0,100.0
+random,0.8909,0.2168,4.23,96.1,47.7
+oracle (ceiling),0.9576,0.0266,1.64,103.3,5.9
+rules: search->cheap,0.9212,0.0235,2.0,99.3,5.2
+rules: search->premium,0.9273,0.1262,1.71,100.0,27.8
