@@ -1,0 +1,216 @@
+id,tier,model,answer,input_tokens,output_tokens,cost_usd,latency_s
+math_001,free,openai/gpt-oss-120b,"We can rewrite the equation using the same base.
+
+\[
+2^8 = 4^x \quad\text{and}\quad 4 = 2^2
+\]
+
+So
+
+\[
+4^x = (2^2)^x = 2^{2x}.
+\]
+
+Now set the exponents equal because the bases are the same:
+
+\[
+2^8 = 2^{2x} \implies 8 = 2x \implies x = \frac{8}{2} = 4.
+\]
+
+\[
+\boxed{4}
+\]
+
+**ANSWER:** 4",109,229,0.0,2.37
+math_001,cheap,openai/gpt-5-mini,"We have 2^8 = 4^x. Write 4 as 2^2: 4^x = (2^2)^x = 2^{2x}. Thus 2^8 = 2^{2x}, so 8 = 2x and x = 4.
+
+ANSWER: 4",44,276,0.000563,6.3
+math_001,premium,anthropic/claude-sonnet-5,ANSWER: 4,54,43,0.000538,2.54
+factual_001,free,openai/gpt-oss-120b,C,117,45,0.0,0.64
+factual_001,cheap,openai/gpt-5-mini,C,52,45,0.000103,2.54
+factual_001,premium,anthropic/claude-sonnet-5,C,79,3,0.000188,1.41
+reasoning_001,free,openai/gpt-oss-120b,D,140,104,0.0,0.79
+reasoning_001,cheap,openai/gpt-5-mini,D,75,57,0.00013275,2.86
+reasoning_001,premium,anthropic/claude-sonnet-5,D,109,3,0.000248,1.49
+code_001,free,openai/gpt-oss-120b,"```python
+def pluck(arr):
+    """"""
+    Given an array representing a branch of a tree with non‑negative integer nodes,
+    return the node with the smallest even value and its index.
+
+    The result is a list: [smallest_even_value, its_index].
+    If there are no even values or the array is empty, return [].
+
+    Parameters
+    ----------
+    arr : list[int]
+        List of non‑negative integers.
+
+    Returns
+    -------
+    list[int]
+        Either [value, index] or [].
+    """"""
+    # Initialise with a sentinel that indicates no even number has been found yet.
+    min_even = None
+    min_idx = -1
+
+    for idx, val in enumerate(arr):
+        # Only consider even numbers.
+        if val % 2 == 0:
+            # If this is the first even number or a smaller even number than
+            # the current best, update.
+            if min_even is None or val < min_even:
+                min_even = val
+                min_idx = idx
+            # If we find the same value again, we keep the earlier index
+            # because we only update on strictly smaller values.
+
+    # If we never found an even number, return an empty list.
+    if min_even is None:
+        return []
+
+    return [min_even, min_idx]
+```",397,339,0.0,1.01
+code_001,cheap,openai/gpt-5-mini,"```python
+def pluck(arr):
+    """"""
+    ""Given an array representing a branch of a tree that has non-negative integer nodes
+    your task is to pluck one of the nodes and return it.
+    The plucked node should be the node with the smallest even value.
+    If multiple nodes with the same smallest even value are found return the node that has smallest index.
+
+    The plucked node should be returned in a list, [ smalest_value, its index ],
+    If there are no even values or the given array is empty, return [].
+
+    Example 1:
+        Input: [4,2,3]
+        Output: [2, 1]
+        Explanation: 2 has the smallest even value, and 2 has the smallest index.
+
+    Example 2:
+        Input: [1,2,3]
+        Output: [2, 1]
+        Explanation: 2 has the smallest even value, and 2 has the smallest index. 
+
+    Example 3:
+        Input: []
+        Output: []
+    
+    Example 4:
+        Input: [5, 0, 3, 0, 4, 2]
+        Output: [0, 1]
+        Explanation: 0 is the smallest value, but  there are two zeros,
+                     so we will choose the first zero, which has the smallest index.
+
+    Constraints:
+        * 1 <= nodes.length <= 10000
+        * 0 <= node.value
+    """"""
+    if not arr:
+        return []
+
+    min_val = None
+    min_idx = -1
+
+    for i, v in enumerate(arr):
+        # consider only even non-negative integers per problem statement
+        if isinstance(v, int) and v % 2 == 0:
+            if min_val is None or v < min_val:
+                min_val = v
+                min_idx = i
+            # If equal value, we keep the existing (smaller) index
+
+    return [] if min_val is None else [min_val, min_idx]
+```",332,649,0.001381,9.7
+code_001,premium,anthropic/claude-sonnet-5,"```python
+def pluck(arr):
+    """"""
+    ""Given an array representing a branch of a tree that has non-negative integer nodes
+    your task is to pluck one of the nodes and return it.
+    The plucked node should be the node with the smallest even value.
+    If multiple nodes with the same smallest even value are found return the node that has smallest index.
+
+    The plucked node should be returned in a list, [ smalest_value, its index ],
+    If there are no even values or the given array is empty, return [].
+
+    Example 1:
+        Input: [4,2,3]
+        Output: [2, 1]
+        Explanation: 2 has the smallest even value, and 2 has the smallest index.
+
+    Example 2:
+        Input: [1,2,3]
+        Output: [2, 1]
+        Explanation: 2 has the smallest even value, and 2 has the smallest index. 
+
+    Example 3:
+        Input: []
+        Output: []
+    
+    Example 4:
+        Input: [5, 0, 3, 0, 4, 2]
+        Output: [0, 1]
+        Explanation: 0 is the smallest value, but  there are two zeros,
+                     so we will choose the first zero, which has the smallest index.
+
+    Constraints:
+        * 1 <= nodes.length <= 10000
+        * 0 <= node.value
+    """"""
+    smallest = None
+    smallest_index = -1
+    for i, v in enumerate(arr):
+        if v % 2 == 0:
+            if smallest is None or v < smallest:
+                smallest = v
+                smallest_index = i
+    if smallest is None:
+        return []
+    return [smallest, smallest_index]
+```",450,527,0.00617,4.32
+writing_001,free,openai/gpt-oss-120b,I regret to inform you that I will be unable to attend the meeting due to an unforeseen circumstance.,93,67,0.0,0.48
+writing_001,cheap,openai/gpt-5-mini,"I am unable to attend the meeting due to an unforeseen circumstance.
+
+Other options:
+- I apologize, but I cannot attend the meeting—an unexpected issue has arisen.
+- Unfortunately, I have a scheduling conflict and will not be able to make the meeting; can we reschedule?",28,514,0.001035,8.73
+writing_001,premium,anthropic/claude-sonnet-5,"Here's a more professional version:
+
+""Hello, I'm unable to attend the meeting as something unexpected has come up. I apologize for any inconvenience this may cause.""
+
+A few other options depending on context:
+
+**Slightly more formal:**
+""Good morning/afternoon, I regret to inform you that I will be unable to attend today's meeting due to an unforeseen circumstance. I apologize for the short notice.""
+
+**If you can offer alternatives:**
+""Hi [Name], I'm unable to make it to the meeting today due to an unexpected issue. Could we reschedule, or would it be possible to send me a summary afterward?""
+
+**Brief and polite:**
+""Hello, apologies for the short notice, but I won't be able to attend the meeting today due to an urgent matter. Please let me know if there's anything I should follow up on.""
+
+Would you like me to tailor this further based on who you're sending it to (e.g., a boss, colleague, or client)?",42,306,0.003144,4.26
+search_001,free,openai/gpt-oss-120b,"**Top three India‑focused headlines for today (30 September 2026)**  
+
+| # | Headline | Why it’s a top story |
+|---|----------|----------------------|
+| 1 | **“WhatsApp to charge businesses for service messages from October 1; India rate set at Rs 0.115 per message”** | The change will affect millions of Indian businesses that use WhatsApp for customer communication, and the pricing decision has drawn immediate scrutiny from regulators and trade bodies. |
+| 2 | **“Prasar Bharati CEO says structural issues in the television‑ratings system were known and are being examined”** | The CEO’s admission highlights long‑standing concerns about the reliability of TV‑viewership data, a critical metric for advertisers, broadcasters and the Ministry of Information and Broadcasting. |
+| 3 | **“Who owns what AI uses? India’s copyright debate turns to content traceability”** | As generative‑AI tools proliferate, India is debating how copyright law can track and remunerate creators whose work is fed into AI systems – a policy issue with far‑reaching economic and cultural implications. |
+
+These three stories dominate today’s news cycle because they each touch on a major sector (digital payments/communication, media & advertising, and intellectual‑property law) and are shaping immediate regulatory and business decisions across the country.",1652,756,0.0,2.18
+search_001,cheap,openai/gpt-5-mini,"From the provided search results, the top three India headlines today are:
+
+1. Four more arrests made in Delhi Red Fort blast probe — the NIA arrested four people, including three doctors, in connection with the car-bomb attack that killed 10 and injured 32.  
+2. India pledges stable policy amid moderate inflation — Union Minister Ashwini Vaishnaw, speaking in Singapore, said India will maintain a stable policy environment to foster growth and keep inflation moderate.  
+3. Major Earth Summit kicks off in Hyderabad — the first leg of the three-city “Earth Summit 2025–26,” organised by NABARD and IAMAI, began in Hyderabad focusing on rural innovation, finance, agriculture and climate action.",1587,746,0.00188875,12.28
+search_001,premium,anthropic/claude-sonnet-5,"Based on the search results, there isn't a single consistent ""today"" since the sources span several different dates (from 2021 through 2026). The most recent dated entries are from **September 29–30, 2026**, so here are the top three headlines from that timeframe:
+
+1. **PETA India seeks nationwide ban on meat ads** – The animal rights group has written to Information & Broadcasting Minister Ashwini Vaishnaw requesting a ban on meat advertisements across TV, online platforms, and billboards, with online meat sellers like Licious and FreshToHome specifically in focus.
+
+2. **Supreme Court rejects Percept's challenge in Sourav Ganguly case** – The Supreme Court declined to reopen a dispute over a 2003 player representation agreement, upholding a Rs 14.49 crore arbitral award in favor of former India cricket captain Sourav Ganguly.
+
+3. **WhatsApp to charge businesses for service messages starting October 1** – India's rate has been set at Rs 0.115 per message, marking a significant shift in how businesses will pay for WhatsApp communications.
+
+**Note:** If you're looking for headlines from a specific date, let me know and I can narrow down further — the search results reference several different ""todays"" (including September 27, 2021; November 21, 2025; and January 20–21, 2026), so I want to make sure I'm giving you the most relevant information.",2673,616,0.011506,7.02

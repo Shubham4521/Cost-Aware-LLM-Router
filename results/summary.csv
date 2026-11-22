@@ -1,0 +1,4 @@
+tier,prompts,pass_rate,total_cost_usd,avg_latency_s
+free,6,0.6667,0.0,1.245
+cheap,6,0.8333,0.0051,7.0683
+premium,6,0.6667,0.0218,3.5067
