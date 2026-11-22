@@ -14,3 +14,4 @@ def route(prompt: str, search_tier: str = "cheap") -> dict:
     """Return the tier to use and whether to run web search."""
     search = needs_search(prompt)
     return {"tier": search_tier if search else "free", "search": search}
+ 
